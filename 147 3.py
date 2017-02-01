@@ -16,8 +16,8 @@ def get_images(directory=None):
         absolute_filename = os.path.join(directory, entry)
         try:
             image = PIL.Image.open(absolute_filename)
-            file_list += [entry]
-            image_list += [image]
+            file_list.append(entry) # Same as file_list += [entry], but better
+            image_list.append(image)
         except IOError:
             pass # do nothing with errors tying to open non-images
     return image_list, file_list
@@ -41,11 +41,11 @@ def frame_all_images(wider, r,g,b, directory=None):
     except:
         pass
     images, files = get_images(directory)
-    for n in range(len(images)):
-        fname,ftype = files[n].split('.')
-        new_image = frame_image(images[n], wider ,r,g,b)
-        newName = os.path.join(new_directory,fname + ".png")
-        new_image.save(newName)
+    for index, image in enumerate(images):
+        fname, ftype = files[index].split('.')
+        new_image = frame_image(image, wider, r, g , b)
+        new_name = os.path.join(new_directory, fname + ".png")
+        new_image.save(new_name)
     print 'Success! All images have been framed!'
     
 def tint_image(image, r,g,b):
@@ -63,11 +63,11 @@ def tint_all_images(r,g,b, directory=None):
     except:
         pass
     images, files = get_images(directory)
-    for n in range(len(images)):
-        fname,ftype = files[n].split('.')
-        new_image = tint_image(images[n], r,g,b)
-        newName = os.path.join(new_directory,fname + ".png")
-        new_image.save(newName)
+    for index, image in enumerate(images):
+        fname, ftype = files[index].split('.')
+        new_image = tint_image(image, r, g, b)
+        new_name = os.path.join(new_directory, fname + ".png")
+        new_image.save(new_name)
     print 'Success! All images have been tinted!'
     
 def blur_image(image, radius):
@@ -85,9 +85,9 @@ def blur_all_images(radius, directory=None):
     except:
         pass
     images, files = get_images(directory)
-    for n in range(len(images)):
-        fname,ftype = files[n].split('.')
-        new_image = blur_image(images[n], radius)
-        newName = os.path.join(new_directory,fname + ".png")
-        new_image.save(newName)
+    for index, image in enumerate(images):
+        fname, ftype = files[index].split('.')
+        new_image = blur_image(image, radius)
+        new_name = os.path.join(new_directory, fname + ".png")
+        new_image.save(new_name)
     print 'Success! All images have been blurred!'
